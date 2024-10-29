@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# Load the version from .env file
 source /home/mostafa/Desktop/FSD\ Projects/big_mart/.env
 version=$VERSION
 
-# Function to increment the version
 increment_version() {
     major=${version%%.*}
     minor=${version##*.}
@@ -17,13 +15,10 @@ increment_version() {
     echo "$major.$minor"
 }
 
-# Update version
 new_version=$(increment_version)
 
-# Update .env file with the new version
 sed -i "s/VERSION=$version/VERSION=$new_version/" /home/mostafa/Desktop/FSD\ Projects/big_mart/.env
 
-# DVC and Git commands
 cd '/home/mostafa/Desktop/FSD Projects/big_mart'
 dvc add dags/data/dvc_df.csv
 dvc add dags/data/df.csv
