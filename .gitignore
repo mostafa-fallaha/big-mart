@@ -6,3 +6,4 @@ webserver_config.py
 __pycache__
 data.csv
 .env
+*.ipynb

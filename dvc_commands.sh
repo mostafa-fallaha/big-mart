@@ -5,7 +5,7 @@ version=$VERSION
 
 increment_version() {
     major=${version%%.*}
-    minor=${version##*.}
+    minor=${version##*.} 
     if [ "$minor" -eq 9 ]; then
         major=$((major + 1))
         minor=0
