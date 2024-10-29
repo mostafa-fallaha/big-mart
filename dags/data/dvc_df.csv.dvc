@@ -1,0 +1,5 @@
+outs:
+- md5: 2d4d6fa0fb6301f37cc94e13f744df1e
+  size: 997037
+  hash: md5
+  path: dvc_df.csv
