@@ -7,3 +7,5 @@ __pycache__
 data.csv
 .env
 *.ipynb
+.ipynb_checkpoints
+mlruns

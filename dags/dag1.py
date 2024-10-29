@@ -1,6 +1,6 @@
 import textwrap
 from datetime import datetime, timedelta
-from scripts import etl, train_model
+from scripts import etl, version_model, train_model
 from airflow.models.dag import DAG
 
 from airflow.operators.bash import BashOperator
@@ -28,9 +28,9 @@ with DAG(
         python_callable=etl.cleaning
     )
 
-    train_model = PythonOperator(
-        task_id = 'train_model',
-        python_callable=train_model.train_model
+    version_model = PythonOperator(
+        task_id = 'version_model',
+        python_callable=version_model.version_model
     )
 
     shell_script = BashOperator(
@@ -39,4 +39,4 @@ with DAG(
         do_xcom_push=False
     )
 
-    etl >> shell_script >> train_model
+    etl >> shell_script >> version_model

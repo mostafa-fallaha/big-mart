@@ -1,3 +1,12 @@
+import mlflow
+import mlflow.sklearn
+from mlflow.models import infer_signature
+from sklearn.metrics import root_mean_squared_error, mean_absolute_error
+from datetime import datetime
+# from train_model import train_model
+# import warnings
+# warnings.filterwarnings('ignore')
+
 import pandas as pd
 import numpy as np
 import dvc.api, dvc.repo
@@ -40,3 +49,33 @@ def train_model():
     # y_pred_poly = linear_poly.predict(X_test_poly)
     # print(root_mean_squared_error(y_test, y_pred_poly))
     return linear_poly, X_test, X_test_poly, y_test
+
+def version_model():
+    runname = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+
+    mlflow.set_experiment('big_mart_model')
+    with mlflow.start_run(run_name=runname) as mlflow_run:
+        run_id = mlflow_run.info.run_id
+
+        linear_poly, X_test, X_test_poly, y_test = train_model()
+
+        # =========== Model metrics ======================
+        y_pred = linear_poly.predict(X_test_poly)
+
+        rmse = root_mean_squared_error(y_test, y_pred)
+        mae = mean_absolute_error(y_test, y_pred)
+
+        # =========== Model versioning ======================
+        signature = infer_signature(X_test, y_test)
+
+        mlflow.log_params({'Polynomial Degree': 5})
+
+        mlflow.log_metric("rmse", rmse)
+        mlflow.log_metric("mae", mae)
+
+        mlflow.sklearn.log_model(
+            sk_model=linear_poly,
+            artifact_path="linear_poly_model",
+            signature=signature,
+            registered_model_name="linear_poly_registered_model"
+        )
