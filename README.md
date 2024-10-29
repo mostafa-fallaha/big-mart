@@ -30,3 +30,9 @@ The pipeline is managed by an Apache Airflow Directed Acyclic Graph (DAG) with t
 
 - **DVC**: All cleaned data versions are stored and managed with DVC on Google Drive. This enables reproducibility and allows historical data versions to be retrieved as needed.
 - **MLflow**: Models are tracked in MLflow, with metrics and parameters logged for each version. Access the MLflow tracking server to review model performance over time.
+
+<br>
+
+| Airflow Graph                          |
+| -------------------------------------- |
+| ![Landing](./assets/airflow_graph.png) |
