@@ -6,6 +6,7 @@ from datetime import datetime
 # from train_model import train_model
 # import warnings
 # warnings.filterwarnings('ignore')
+mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 
 import pandas as pd
 import numpy as np
