@@ -1,6 +1,6 @@
 import textwrap
 from datetime import datetime, timedelta
-from scripts.etl import pre
+from scripts import etl, train_model
 from airflow.models.dag import DAG
 
 from airflow.operators.bash import BashOperator
@@ -16,7 +16,7 @@ with DAG(
         "retries": 1,
         "retry_delay": timedelta(seconds=30),
     },
-    description="etl test 1",
+    description="pipeline for cleaning, versioning data and training a model",
     schedule=timedelta(days=1),
     start_date=datetime(2024, 1, 1),
     catchup=False,
@@ -25,7 +25,12 @@ with DAG(
 
     etl = PythonOperator(
         task_id='etl',
-        python_callable=pre
+        python_callable=etl.cleaning
+    )
+
+    train_model = PythonOperator(
+        task_id = 'train_model',
+        python_callable=train_model.train_model
     )
 
     shell_script = BashOperator(
@@ -34,4 +39,4 @@ with DAG(
         do_xcom_push=False
     )
 
-    etl >> shell_script
+    etl >> shell_script >> train_model

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def pre():
+def cleaning():
     df = pd.read_csv('/home/mostafa/Desktop/FSD Projects/big_mart/dags/data/data.csv')
 
     df['Item_Weight'] = df['Item_Weight'].fillna(df['Item_Weight'].mean())
