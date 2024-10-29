@@ -33,10 +33,10 @@ with DAG(
         python_callable=version_model.version_model
     )
 
-    shell_script = BashOperator(
-        task_id="shell_script",
+    dvc_versioning = BashOperator(
+        task_id="dvc_versioning",
         bash_command="{{ '/home/mostafa/Desktop/FSD\ Projects/big_mart/dvc_commands.sh' }}",
         do_xcom_push=False
     )
 
-    etl >> shell_script >> version_model
+    etl >> dvc_versioning >> version_model
