@@ -5,3 +5,4 @@ standalone_admin_password.txt
 webserver_config.py
 __pycache__
 data.csv
+.env
